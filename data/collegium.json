@@ -1,0 +1,48 @@
+{
+  "collegia": {
+    "Yappa Romana": {
+      "magister": "1384518523899871284",
+      "legatus": null,
+      "quaestor": null,
+      "praefectus": "1384518523899871284",
+      "anggota": [
+        "1384518523899871284"
+      ],
+      "roles": {
+        "1384518523899871284": "sodalis"
+      },
+      "fractio": [
+        {
+          "nama": "EYY",
+          "ketua": "1384518523899871284",
+          "anggota": [
+            "1384518523899871284"
+          ],
+          "roles": {
+            "1384518523899871284": "ketua"
+          }
+        }
+      ]
+    }
+  },
+  "fractioRequests": [
+    {
+      "nama": "EY",
+      "collegium": "Yappa Romana",
+      "pembuat": "1384518523899871284"
+    },
+    {
+      "nama": "Oy",
+      "collegium": "Yappa Romana",
+      "pembuat": "1384518523899871284",
+      "status": "approved"
+    },
+    {
+      "nama": "EYY",
+      "collegium": "Yappa Romana",
+      "pembuat": "1384518523899871284",
+      "status": "approved",
+      "logo": "https://cdn.discordapp.com/attachments/1384719607843258473/1394696409877446808/ChatGPT_Image_Jul_15_2025_08_05_09_AM.png?ex=687b0b80&is=6879ba00&hm=823d8e6872375ce95186eb138650cd8024165f22ba53d893e2487a24ec8df9b4&"
+    }
+  ]
+}
