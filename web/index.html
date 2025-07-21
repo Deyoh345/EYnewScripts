@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Role Request</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="modern-container">
+    <div class="modern-card">
+      <h1 class="modern-title">Custom Role Request</h1>
+      <div id="loginSection" style="display:none; flex-direction:column; align-items:center; gap:18px;">
+        <p>Login dengan Discord untuk mengisi form custom role.</p>
+        <button id="discordLoginBtn" class="modern-btn" style="width:220px;display:flex;align-items:center;justify-content:center;gap:10px;">
+          <img src="https://cdn.jsdelivr.net/gh/edent/SuperTinyIcons/images/svg/discord.svg" alt="Discord" style="width:22px;vertical-align:middle;"> Login with Discord
+        </button>
+      </div>
+      <form id="roleForm" class="modern-form" style="display:none">
+        <div class="modern-field">
+          <label>Nama</label>
+          <input type="text" name="nama" required placeholder="Nama Role">
+        </div>
+        <div class="modern-field">
+          <label>Tipe Warna</label>
+          <select name="tipe" id="tipe" required>
+            <option value="solid">Solid</option>
+            <option value="gradient">Gradient</option>
+            <option value="holographic">Holographic</option>
+          </select>
+        </div>
+        <div id="solidInput" class="modern-field">
+          <label>Warna</label>
+          <input type="color" name="warna1">
+        </div>
+        <div id="gradientInput" class="modern-field" style="display:none">
+          <label>Warna 1</label>
+          <input type="color" name="warna1">
+          <label>Warna 2</label>
+          <input type="color" name="warna2">
+          <label>Icon Gradient <span class="modern-hint">(64x64, min 256kb)</span></label>
+          <input type="file" name="icon" accept="image/png,image/jpeg">
+        </div>
+        <div id="holoInput" class="modern-field" style="display:none">
+          <p class="modern-hint">Holographic tidak membutuhkan warna.</p>
+        </div>
+        <button type="submit" class="modern-btn">Kirim Permintaan</button>
+      </form>
+      <div id="result" class="modern-result"></div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+  <script>
+    // Cek login status dari localStorage
+    function isLoggedIn() {
+      return localStorage.getItem('discord_user') !== null;
+    }
+    function showForm() {
+      document.getElementById('loginSection').style.display = 'none';
+      document.getElementById('roleForm').style.display = '';
+    }
+    function showLogin() {
+      document.getElementById('loginSection').style.display = 'flex';
+      document.getElementById('roleForm').style.display = 'none';
+    }
+    window.onload = function() {
+      if (isLoggedIn()) {
+        showForm();
+      } else {
+        showLogin();
+      }
+      document.getElementById('discordLoginBtn').onclick = function() {
+        // Ganti CLIENT_ID dan REDIRECT_URI sesuai bot Anda
+        const CLIENT_ID = '1396165749692825741';
+        const REDIRECT_URI = encodeURIComponent(window.location.origin + '/auth/discord/callback');
+        const OAUTH_URL = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=identify`;
+        window.location.href = OAUTH_URL;
+      };
+    };
+  </script>
+</body>
+</html>

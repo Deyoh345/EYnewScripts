@@ -1,5 +1,18 @@
+
 require('dotenv').config();
 const { REST, Routes } = require('discord.js');
+
+// Debug: log token and client id (hide token for safety)
+if (!process.env.DISCORD_TOKEN || !process.env.CLIENT_ID) {
+  console.error('ERROR: DISCORD_TOKEN atau CLIENT_ID tidak ditemukan di .env!');
+  process.exit(1);
+}
+if (process.env.DISCORD_TOKEN.length < 30) {
+  console.error('ERROR: DISCORD_TOKEN terlalu pendek, kemungkinan salah.');
+  process.exit(1);
+}
+console.log('CLIENT_ID:', process.env.CLIENT_ID);
+console.log('DISCORD_TOKEN: *****' + process.env.DISCORD_TOKEN.slice(-8)); // only show last 8 chars
 
 
 const fs = require('fs');

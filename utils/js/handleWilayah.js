@@ -49,7 +49,7 @@ function getWilayahUser(userId) {
     return db[userId].conquered || 0;
 }
 
-// Daftar wilayah versi Empire Yapping (inspirasi Roman Empire, nama unik)
+// Daftar wilayah versi Empire Yapping 
 const WILAYAH_LIST = [
     'Yappingum',
     'Canisium',

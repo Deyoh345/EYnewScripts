@@ -2,7 +2,10 @@
   "dependencies": {
     "canvas": "^3.1.2",
     "discord.js": "^14.21.0",
-    "dotenv": "^17.2.0"
+    "dotenv": "^17.2.0",
+    "express": "^5.1.0",
+    "multee": "^0.2.4",
+    "multer": "^2.0.2"
   },
   "name": "eynewscripts",
   "version": "1.0.0",

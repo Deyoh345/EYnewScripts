@@ -1,4 +1,5 @@
 require('dotenv').config();
+
 const { Client, GatewayIntentBits, ActivityType } = require('discord.js');
 const emping = new Client({ intents: [
     GatewayIntentBits.Guilds,
@@ -9,7 +10,7 @@ const emping = new Client({ intents: [
 
 emping.once('ready', () => {
     console.log(`Bot JS siap sebagai ${emping.user.tag}`);
-    emping.user.setActivity('Streaming YouTube', { type: ActivityType.Streaming, url: 'https://youtube.com/' });
+    emping.user.setActivity('Empire Yapping', { type: ActivityType.Streaming, url: 'https://www.twitch.tv/deyohhh_?sr=a' });
 });
 
 // Handler untuk slash command
@@ -52,10 +53,18 @@ emping.on('interactionCreate', async interaction => {
     }
 });
 
+
 emping.on('messageCreate', message => {
     if (message.content === '!halojs') {
         message.reply('Halo dari bot JavaScript!');
     }
+});
+
+const { handleGuildJoin } = require('./utils/js/sayingThanksHandle');
+
+emping.on('guildCreate', async guild => {
+    // Kirim ucapan terima kasih otomatis
+    await handleGuildJoin(guild, emping);
 });
 
 emping.login(process.env.DISCORD_TOKEN);

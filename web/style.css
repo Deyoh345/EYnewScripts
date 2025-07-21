@@ -1,0 +1,101 @@
+body {
+  font-family: 'Montserrat', Arial, sans-serif;
+  background: linear-gradient(135deg, #e6c200 0%, #fffbe6 100%);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+.modern-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modern-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.10);
+  padding: 36px 32px 32px 32px;
+  max-width: 420px;
+  width: 100%;
+  animation: fadeIn 0.7s;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: none; }
+}
+.modern-title {
+  text-align: center;
+  color: #e6c200;
+  font-size: 2.1rem;
+  font-weight: 700;
+  margin-bottom: 18px;
+  letter-spacing: 1px;
+}
+.modern-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.modern-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.modern-field label {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 2px;
+}
+.modern-field input[type="text"],
+.modern-field select {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1.5px solid #e6c200;
+  font-size: 1rem;
+  background: #fffbe6;
+  outline: none;
+  transition: border 0.2s;
+}
+.modern-field input[type="text"]:focus,
+.modern-field select:focus {
+  border: 1.5px solid #bfa100;
+}
+.modern-field input[type="color"] {
+  width: 40px;
+  height: 32px;
+  border: none;
+  background: none;
+  margin: 0 8px 0 0;
+  cursor: pointer;
+}
+.modern-btn {
+  margin-top: 18px;
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(90deg, #e6c200 60%, #bfa100 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 1px;
+  box-shadow: 0 2px 8px rgba(230,194,0,0.08);
+  transition: background 0.2s;
+}
+.modern-btn:hover {
+  background: linear-gradient(90deg, #bfa100 60%, #e6c200 100%);
+}
+.modern-hint {
+  color: #bfa100;
+  font-size: 0.95em;
+  font-weight: 600;
+}
+.modern-result {
+  margin-top: 18px;
+  text-align: center;
+  color: #2e7d32;
+  font-weight: bold;
+  font-size: 1.1em;
+}
