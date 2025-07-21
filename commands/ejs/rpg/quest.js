@@ -1,10 +1,10 @@
-// quest.js - Command frontend untuk fitur quest RPG Empire Roman
+// quest.js - Command frontend untuk fitur quest RPG Empire Yapping
 const { EmbedBuilder } = require('discord.js');
 const rpgQuest = require('../../../utils/js/rpgQuest');
 
 module.exports = {
     name: 'quest',
-    description: 'Lihat dan klaim quest di Empire Roman',
+    description: 'Lihat dan klaim quest di Empire Yapping',
     options: [
         {
             name: 'list',

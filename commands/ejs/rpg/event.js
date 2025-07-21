@@ -1,10 +1,10 @@
-// event.js - Command frontend untuk fitur event RPG Empire Roman
+// event.js - Command frontend untuk fitur event RPG Empire Yapping
 const { EmbedBuilder } = require('discord.js');
 const rpgEvent = require('../../../utils/js/rpgEvent');
 
 module.exports = {
     name: 'event',
-    description: 'Lihat dan partisipasi event RPG Empire Roman',
+    description: 'Lihat dan partisipasi event RPG Empire Yapping',
     options: [
         {
             name: 'info',

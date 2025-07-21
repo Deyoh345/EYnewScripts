@@ -1,27 +1,31 @@
 {
   "collegia": {
     "Yappa Romana": {
+      "magister": null,
+      "legatus": null,
+      "quaestor": null,
+      "praefectus": null,
+      "anggota": [],
+      "roles": {},
+      "fractio": [],
+      "wilayah": [
+        "Roma Yappa"
+      ]
+    },
+    "gallia yappensis": {
       "magister": "1384518523899871284",
       "legatus": null,
       "quaestor": null,
-      "praefectus": "1384518523899871284",
+      "praefectus": null,
       "anggota": [
         "1384518523899871284"
       ],
       "roles": {
         "1384518523899871284": "sodalis"
       },
-      "fractio": [
-        {
-          "nama": "EYY",
-          "ketua": "1384518523899871284",
-          "anggota": [
-            "1384518523899871284"
-          ],
-          "roles": {
-            "1384518523899871284": "ketua"
-          }
-        }
+      "fractio": [],
+      "wilayah": [
+        "Wilayah Khusus"
       ]
     }
   },

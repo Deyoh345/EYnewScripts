@@ -61,10 +61,11 @@ module.exports = {
     ],
     async execute(interaction) {
         const { handleNoSubcommandError } = require('../../../utils/js/error');
-        await interaction.deferReply({ ephemeral: true });
+        await interaction.deferReply({ ephemeral: false });
         const db = loadDB();
         // Pastikan Yappa Romana selalu ada
         if (!db.collegia['Yappa Romana']) {
+            // Yappa Romana hanya berada di wilayah Roma Yappa
             db.collegia['Yappa Romana'] = {
                 magister: null, // Magister Collegi (pemimpin utama)
                 legatus: null,  // Legatus Collegi (wakil)
@@ -73,7 +74,7 @@ module.exports = {
                 anggota: [],
                 roles: {},
                 fractio: [],
-                wilayah: getWilayahCollegium(5) // 5 wilayah acak untuk collegium utama
+                wilayah: ['Roma Yappa'] // Hanya 1 wilayah: Roma Yappa
             };
             saveDB(db);
         } // end options array
@@ -115,20 +116,74 @@ module.exports = {
                 )
                 .setFooter({ text: 'Empire Yapping!' })
                 .setTimestamp();
-            return interaction.editReply({ embeds: [embed] });
+            // Pesan info dapat dilihat orang lain (ephemeral: false)
+            return interaction.editReply({ embeds: [embed], ephemeral: false });
         } else if (sub === 'anggota') {
             const anggota = yappa.anggota.length > 0 ? yappa.anggota.map(id => `<@${id}>`).join(', ') : 'Belum ada anggota';
             return interaction.editReply({ content: `Daftar anggota Yappa Romana: ${anggota}` });
         } else if (sub === 'gabung') {
-            if (yappa.anggota.includes(interaction.user.id)) {
-                return interaction.editReply('Kamu sudah menjadi anggota Yappa Romana!');
+            // Pilihan collegium yang tersedia (bisa dikembangkan ke depan)
+            const daftarCollegium = [
+                'Yappa Romana',
+                'Canisium Nova',
+                'Aurelia Magna',
+                'Gallia Yappensis',
+                'Imperium Vox'
+            ];
+            // Jika user sudah anggota salah satu collegium, tolak
+            let sudahGabung = false;
+            let namaColGabung = null;
+            for (const namaCol of daftarCollegium) {
+                if (db.collegia[namaCol] && db.collegia[namaCol].anggota && db.collegia[namaCol].anggota.includes(interaction.user.id)) {
+                    sudahGabung = true;
+                    namaColGabung = namaCol;
+                    break;
+                }
             }
-            yappa.anggota.push(interaction.user.id);
-            yappa.roles[interaction.user.id] = 'sodalis';
-            // Jika belum ada magister, user pertama jadi magister
-            if (!yappa.magister) yappa.magister = interaction.user.id;
-            saveDB(db);
-            return interaction.editReply('Kamu berhasil bergabung ke collegium Yappa Romana!');
+            if (sudahGabung) {
+                return interaction.editReply(`Kamu sudah menjadi anggota collegium **${namaColGabung}**!`);
+            }
+            // Pilihan join
+            const row = {
+                type: 1,
+                components: daftarCollegium.map(nama => ({
+                    type: 2,
+                    style: 1,
+                    label: nama,
+                    custom_id: `gabung_collegium_${nama.replace(/\s+/g, '_').toLowerCase()}`
+                }))
+            };
+            await interaction.editReply({
+                content: 'Pilih collegium yang ingin kamu gabung:',
+                components: [row],
+                ephemeral: false
+            });
+            // Tunggu interaksi tombol
+            const filter = i => i.user.id === interaction.user.id && i.customId.startsWith('gabung_collegium_');
+            try {
+                const collected = await interaction.channel.awaitMessageComponent({ filter, time: 15000 });
+                const namaColDipilih = collected.customId.replace('gabung_collegium_', '').replace(/_/g, ' ');
+                // Pastikan collegium ada di db, jika belum buat default
+                if (!db.collegia[namaColDipilih]) {
+                    db.collegia[namaColDipilih] = {
+                        magister: null,
+                        legatus: null,
+                        quaestor: null,
+                        praefectus: null,
+                        anggota: [],
+                        roles: {},
+                        fractio: [],
+                        wilayah: [namaColDipilih === 'Yappa Romana' ? 'Roma Yappa' : 'Wilayah Khusus']
+                    };
+                }
+                db.collegia[namaColDipilih].anggota.push(interaction.user.id);
+                db.collegia[namaColDipilih].roles[interaction.user.id] = 'sodalis';
+                if (!db.collegia[namaColDipilih].magister) db.collegia[namaColDipilih].magister = interaction.user.id;
+                saveDB(db);
+                await collected.update({ content: `Kamu berhasil bergabung ke collegium **${namaColDipilih}**!`, components: [] });
+            } catch (e) {
+                await interaction.editReply({ content: 'Waktu habis, silakan ulangi untuk memilih collegium.', components: [] });
+            }
         } else if (sub === 'keluar') {
             if (!yappa.anggota.includes(interaction.user.id)) {
                 return interaction.editReply('Kamu bukan anggota Yappa Romana.');
@@ -156,18 +211,19 @@ module.exports = {
             if (!yappa.anggota.includes(user.id)) {
                 return interaction.editReply('User bukan anggota Yappa Romana.');
             }
-            yappa.roles[user.id] = role;
+            // Reset semua jabatan jika user sebelumnya menjabat
+            if (yappa.magister === user.id) yappa.magister = null;
+            if (yappa.legatus === user.id) yappa.legatus = null;
+            if (yappa.quaestor === user.id) yappa.quaestor = null;
+            if (yappa.praefectus === user.id) yappa.praefectus = null;
+
+            // Set jabatan baru sesuai role
             if (role === 'magister') yappa.magister = user.id;
             else if (role === 'legatus') yappa.legatus = user.id;
             else if (role === 'quaestor') yappa.quaestor = user.id;
             else if (role === 'praefectus') yappa.praefectus = user.id;
-            // Jika role diganti dari jabatan ke sodalis, kosongkan jabatan jika user tsb sebelumnya menjabat
-            if (role === 'sodalis') {
-                if (yappa.magister === user.id) yappa.magister = null;
-                if (yappa.legatus === user.id) yappa.legatus = null;
-                if (yappa.quaestor === user.id) yappa.quaestor = null;
-                if (yappa.praefectus === user.id) yappa.praefectus = null;
-            }
+            // Set role di roles
+            yappa.roles[user.id] = role;
             saveDB(db);
             return interaction.editReply(`Peran <@${user.id}> di Yappa Romana diubah menjadi **${role}**.`);
         }

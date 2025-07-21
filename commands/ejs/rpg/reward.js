@@ -1,10 +1,10 @@
-// reward.js - Command frontend untuk fitur reward RPG Empire Roman
+// reward.js - Command frontend untuk fitur reward RPG Empire Yapping
 const { EmbedBuilder } = require('discord.js');
 const rpgReward = require('../../../utils/js/rpgReward');
 
 module.exports = {
     name: 'reward',
-    description: 'Lihat dan klaim reward di Empire Roman',
+    description: 'Lihat dan klaim reward di Empire Yapping',
     options: [
         {
             name: 'list',

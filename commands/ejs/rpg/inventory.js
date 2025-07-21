@@ -1,9 +1,9 @@
-// inventory.js - Command frontend untuk fitur inventory RPG Empire Roman
+// inventory.js - Command frontend untuk fitur inventory RPG Empire Yapping
 const rpgInventory = require('../../../utils/js/rpgInventory');
 
 module.exports = {
     name: 'inv',
-    description: 'Lihat dan kelola inventory-mu di Empire Roman',
+    description: 'Lihat dan kelola inventory-mu di Empire Yapping',
     options: [
         {
             name: 'use',

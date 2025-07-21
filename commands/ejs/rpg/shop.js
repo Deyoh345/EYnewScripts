@@ -1,4 +1,4 @@
-// shop.js - Command frontend untuk fitur shop RPG Empire Roman
+// shop.js - Command frontend untuk fitur shop RPG Empire Yapping
 const { EmbedBuilder } = require('discord.js');
 const rpgShop = require('../../../utils/js/rpgShop');
 

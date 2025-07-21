@@ -1,4 +1,4 @@
-// profile.js - Fun RPG Profile dengan Canvas bertema Empire Roman
+// profile.js - Fun RPG Profile dengan Canvas bertema Empire Yapping
 const { AttachmentBuilder, EmbedBuilder } = require('discord.js');
 const { createCanvas, loadImage, registerFont } = require('canvas');
 const fs = require('fs');
@@ -13,7 +13,7 @@ function loadDB() {
 
 module.exports = {
     name: 'profile',
-    description: 'Lihat profil RPG Empire Roman-mu dengan tampilan modern dan cantik! Gunakan /profile [user]',
+    description: 'Lihat profil RPG Empire Yapping-mu dengan tampilan modern dan cantik! Gunakan /profile [user]',
     options: [
         {
             name: 'user',
@@ -56,7 +56,7 @@ module.exports = {
             ctx.font = 'bold 32px Segoe UI, Arial';
             ctx.fillStyle = '#7c5c1e';
             ctx.textAlign = 'center';
-            ctx.fillText('EMPIRE ROMAN PROFILE', 300, 50);
+            ctx.fillText('EMPIRE YAPPING PROFILE', 300, 50);
 
             // Info box dengan background kuning-putih
             ctx.save();
@@ -132,7 +132,7 @@ module.exports = {
 
             const attachment = new AttachmentBuilder(canvas.toBuffer(), { name: 'profile.png' });
             const embed = new EmbedBuilder()
-                .setTitle('Profil Empire Roman')
+                .setTitle('Profil Empire Yapping')
                 .setColor('#c2b280')
                 .setDescription(`Profil RPG untuk **${user.username}**`)
                 .setImage('attachment://profile.png')
